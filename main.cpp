@@ -12,7 +12,7 @@ int counter = 0;
 int counterMax = 3;
 
 // Mock web data setup
-int brightnessFactor = 90;
+int bright = 90;
 
 void setup()
 {
@@ -50,16 +50,16 @@ void loop()
     switch (counter)
     {
     case 0:
-        staticColor(255, 0, 0, brightnessFactor);
+        staticColor(255, 0, 0, bright);
         break;
     case 1:
-        colorWipe(0, 255, 0, brightnessFactor, 50);
+        colorWipe(0, 255, 0, bright, 50);
         break;
     case 2:
-        flash(0, 0, 255, brightnessFactor, 1000);
+        flash(0, 0, 255, bright, 1000);
         break;
     case 3:
-        colorWipe(180, 0, 180, brightnessFactor, 100);
+        flash(180, 0, 180, bright);
         break;
     }
     delay(100);
@@ -71,37 +71,37 @@ void setColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b, uint16_t brightness)
     strip.setPixelColor(n, strip.Color((brightness * r / 255), (brightness * g / 255), (brightness * b / 255)));
 }
 
-void staticColor(int r, int g, int b, int brightnessFactor)
+void staticColor(int r, int g, int b, int bright)
 {
     for (int i = 0; i < NUM_PIXELS; i++)
     {
-        setColor(i, r, g, b, brightnessFactor);
+        setColor(i, r, g, b, bright);
         strip.show();
     }
 }
 
-void flash(int r, int g, int b, int brightnessFactor, int wait)
+void colorWipe(int r, int g, int b, int bright, int wait)
 {
     for (int i = 0; i < NUM_PIXELS; i++)
     {
-        setColor(i, r, g, b, brightnessFactor);
-        strip.show();
-    }
-    delay(wait * 2);
-    for (int i = 0; i < NUM_PIXELS; i++)
-    {
-        setColor(i, 0, 0, 0, brightnessFactor);
-        strip.show();
-    }
-    delay(wait);
-}
-
-void colorWipe(int r, int g, int b, int brightnessFactor, int wait)
-{
-    for (int i = 0; i < NUM_PIXELS; i++)
-    {
-        setColor(i, r, g, b, brightnessFactor);
+        setColor(i, r, g, b, bright);
         strip.show();
         delay(wait);
     }
+}
+
+void flash(int r, int g, int b, int bright, int wait)
+{
+    for (int i = 0; i < NUM_PIXELS; i++)
+    {
+        setColor(i, r, g, b, bright);
+    }
+    strip.show();
+    delay(wait * 2);
+    for (int i = 0; i < NUM_PIXELS; i++)
+    {
+        setColor(i, 0, 0, 0, bright);
+    }
+    strip.show();
+    delay(wait);
 }
