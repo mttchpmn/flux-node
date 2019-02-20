@@ -11,6 +11,9 @@ int buttonState = 0;
 int counter = 0;
 int counterMax = 3;
 
+// Mock web data setup
+int brightnessFactor = 90;
+
 void setup()
 {
     Serial.begin(9600);
@@ -47,52 +50,57 @@ void loop()
     switch (counter)
     {
     case 0:
-        setStaticColor(255, 0, 0);
+        staticColor(255, 0, 0, brightnessFactor);
         break;
     case 1:
-        colorWipe(0, 255, 0, 50);
+        colorWipe(0, 255, 0, brightnessFactor, 50);
         break;
     case 2:
-        flash(0, 0, 255, 1000);
+        flash(0, 0, 255, brightnessFactor, 1000);
         break;
     case 3:
-        colorWipe(180, 0, 180, 100);
+        colorWipe(180, 0, 180, brightnessFactor, 100);
         break;
     }
     delay(100);
 }
 
 // LED PATTERN FUNCTIONS
-void setStaticColor(int r, int g, int b)
+void setColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b, uint16_t brightness)
+{
+    strip.setPixelColor(n, strip.Color((brightness * r / 255), (brightness * g / 255), (brightness * b / 255)));
+}
+
+void staticColor(int r, int g, int b, int brightnessFactor)
 {
     for (int i = 0; i < NUM_PIXELS; i++)
     {
-        strip.setPixelColor(i, strip.Color(r, g, b));
+        setColor(i, r, g, b, brightnessFactor);
         strip.show();
     }
 }
 
-void flash(int r, int g, int b, int delayTime)
+void flash(int r, int g, int b, int brightnessFactor, int wait)
 {
     for (int i = 0; i < NUM_PIXELS; i++)
     {
-        strip.setPixelColor(i, strip.Color(r, g, b));
+        setColor(i, r, g, b, brightnessFactor);
         strip.show();
     }
-    delay(delayTime * 2);
+    delay(wait * 2);
     for (int i = 0; i < NUM_PIXELS; i++)
     {
-        strip.setPixelColor(i, strip.Color(0, 0, 0));
+        setColor(i, 0, 0, 0, brightnessFactor);
         strip.show();
     }
-    delay(delayTime);
+    delay(wait);
 }
 
-void colorWipe(int r, int g, int b, int wait)
+void colorWipe(int r, int g, int b, int brightnessFactor, int wait)
 {
     for (int i = 0; i < NUM_PIXELS; i++)
     {
-        strip.setPixelColor(i, strip.Color(r, g, b));
+        setColor(i, r, g, b, brightnessFactor);
         strip.show();
         delay(wait);
     }
