@@ -2,14 +2,14 @@
 
 // LED Setup
 const int LED_PIN = 7;
-const int NUM_PIXELS = 12;
+const int NUM_PIXELS = 14;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_PIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // Button Setup
 const int BUTTON_PIN = 5;
 int buttonState = 0;
 int counter = 0;
-int counterMax = 3;
+int counterMax = 5;
 
 // Mock web data setup
 int bright = 90;
@@ -44,6 +44,7 @@ void loop()
         }
         Serial.print("Counter is now: ");
         Serial.println(counter);
+        delay(1000);
     }
 
     // Switch lights based on button
@@ -56,10 +57,16 @@ void loop()
         colorWipe(0, 255, 0, bright, 50);
         break;
     case 2:
-        flash(0, 0, 255, bright, 1000);
+        staticColor(0, 0, 255, bright);
         break;
     case 3:
-        flash(180, 0, 180, bright);
+        staticColor(180, 0, 180, bright);
+        break;
+    case 4:
+        staticColor(0, 180, 180, bright);
+        break;
+    case 5:
+        staticColor(180, 180, 0, bright);
         break;
     }
     delay(100);
@@ -73,6 +80,8 @@ void setColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b, uint16_t brightness)
 
 void staticColor(int r, int g, int b, int bright)
 {
+    strip.begin();
+    strip.show();
     for (int i = 0; i < NUM_PIXELS; i++)
     {
         setColor(i, r, g, b, bright);
