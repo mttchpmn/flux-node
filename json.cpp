@@ -23,7 +23,7 @@ void loop()
     // Check result of JSON parsing
     if (obj.success())
     {
-        Serial.println("Parsing successful");
+        Serial.println("JSONParsing successful");
     }
     else
     {
