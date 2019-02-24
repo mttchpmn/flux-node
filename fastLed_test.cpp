@@ -70,13 +70,13 @@ void Breathe(byte red, byte green, byte blue)
         {
             delay(30);
         }
-        if (k > 50 && k < 150)
+        if (k > 50 && k < 120)
         {
             delay(7);
         }
-        if (k > 150)
+        if (k > 120)
         {
-            delay(3);
+            delay(1);
         }
     }
 
@@ -92,13 +92,13 @@ void Breathe(byte red, byte green, byte blue)
         {
             delay(30);
         }
-        if (k > 50 && k < 150)
+        if (k > 50 && k < 120)
         {
             delay(7);
         }
-        if (k > 150)
+        if (k > 120)
         {
-            delay(3);
+            delay(1);
         }
     }
 }
@@ -150,7 +150,7 @@ void Sparkle5(byte red, byte green, byte blue)
     setPixel(Pixel5, 0, 0, 0);
 }
 
-void Stripe(byte red, byte green, byte blue)
+void Scan(byte red, byte green, byte blue)
 {
     for (int i = 0; i <= NUM_LEDS; i++)
     {
